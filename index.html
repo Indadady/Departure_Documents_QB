@@ -30,34 +30,19 @@
         .table-row-hover:hover { background-color: #f0fdfa; }
         #admin-sidebar { transition: transform 0.3s ease-in-out; }
         .sidebar-open { transform: translateX(0) !important; }
-        .doc-group { border: 1px solid #e2e8f0; border-radius: 0.75rem; overflow: hidden; margin-bottom: 0.75rem; background: #fff; }
-        .doc-group:last-child { margin-bottom: 0; }
-        .doc-group summary { list-style: none; cursor: pointer; padding: 0.875rem 1rem; background: #f8fafc; display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; transition: background 0.15s; }
-        .doc-group summary::-webkit-details-marker { display: none; }
-        .doc-group summary:hover { background: #f0fdfa; }
-        .doc-group[open] summary { border-bottom: 1px solid #e2e8f0; background: #ecfdf5; }
-        .doc-group .chevron { transition: transform 0.2s; color: #94a3b8; }
-        .doc-group[open] .chevron { transform: rotate(180deg); color: #0d9488; }
-        .doc-file-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.75rem 1rem; border-top: 1px solid #f1f5f9; }
-        .doc-file-row:first-child { border-top: none; }
-        .doc-file-row:hover { background: #fafafa; }
         @media print {
             .no-print { display: none !important; }
             body { background-color: white; }
             .shadow-sm, .shadow-md { box-shadow: none !important; }
             .border { border: 1px solid #e2e8f0 !important; }
             main { padding: 0 !important; margin: 0 !important; max-width: 100% !important; }
-            .doc-group { break-inside: avoid; }
-            .doc-group summary { background: #f8fafc !important; }
-            details:not([open]) .doc-group-body { display: block !important; }
-            .doc-group .chevron { display: none; }
         }
     </style>
 </head>
 <body class="text-slate-800 antialiased min-h-screen flex flex-col overflow-x-hidden relative">
 
     <div id="lock-screen" class="fixed inset-0 bg-[#0b1324] bg-opacity-95 z-[100] hidden flex-col items-center justify-center backdrop-blur-sm">
-        <div class="bg-white p-8 rounded-2xl shadow-2xl max-w-sm w-full mx-4 text-center transform transition-all border border-slate-200">
+        <div class="bg-white p-8 rounded-2xl shadow-2xl max-w-sm w-full mx-4 text-center border border-slate-200">
             <img src="https://blogger.googleusercontent.com/img/a/AVvXsEjPMO83G1xHJIu1jKvn1GjQn_C3z42tM-LYvYPKcGIaYkarv47vw5TlYsJFjZxRLVm4e0yQutvIHXQ_VBUHdlu2p25QP7z1NAK2XsEUNUpxycDMpLzi7TJ390gXDpD5orf1OBAXwbwnPrasas06glRIv9rpqwN1YEQvy2fPbKRU4Ogpbo8SyH7NEnt-1FY=w320-h101" alt="큐비글로벌 로고" class="h-11 mx-auto mb-6">
             <h2 class="text-xl font-bold text-slate-800 mb-2">보안 문서함 접속</h2>
             <p class="text-sm text-slate-500 mb-6">안내받으신 접근 비밀번호<br><span class="font-semibold text-teal-600">(행사 출발일자 6자리)</span>를 입력해 주세요.</p>
@@ -76,8 +61,8 @@
         <div class="p-5 flex-grow overflow-y-auto">
             <div class="mb-4">
                 <label class="block text-sm font-bold text-slate-700 mb-2">1. 발주처(학교/기관명) 설정</label>
-                <input type="text" id="admin-school-name" placeholder="예: 고달초등학교" class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:border-teal-500 text-sm" oninput="onSchoolInput()">
-                <p class="text-[11px] text-teal-600 mt-1 font-bold">※ 폴더명·manifest.json 경로와 동일해야 합니다.</p>
+                <input type="text" id="admin-school-name" placeholder="예: 고달초등학교" class="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:border-teal-500 text-sm" oninput="updatePreviewText()">
+                <p class="text-[11px] text-teal-600 mt-1 font-bold">※ 입력하신 이름으로 PDF 폴더 경로가 매칭됩니다.</p>
             </div>
             <div class="mb-4">
                 <label class="block text-sm font-bold text-slate-700 mb-2">2. 프로그램명 설정</label>
@@ -92,11 +77,11 @@
                 <label class="block text-sm font-bold text-slate-700 mb-2">4. 접속 비밀번호</label>
                 <input type="text" id="admin-password" placeholder="예: 260809" class="w-full px-3 py-2 border border-teal-200 bg-teal-50 rounded-md focus:outline-none focus:border-teal-500 text-sm font-semibold tracking-wider">
             </div>
-            <div class="mb-6 bg-teal-50 p-4 rounded-lg border border-teal-200">
-                <label class="block text-sm font-bold text-slate-700 mb-2">5. 제출 자료 업로드 (필독)</label>
-                <p class="text-xs text-slate-600 mb-3 leading-relaxed">현지에서 <strong>실제로 받은 자료만</strong> 카테고리별 폴더에 넣고 manifest.json에 등록하세요. PDF·JPG·PNG 모두 가능합니다.</p>
+            <div class="mb-6 bg-slate-50 p-4 rounded-lg border border-slate-200">
+                <label class="block text-sm font-bold text-slate-700 mb-2">5. PDF 업로드·업데이트 (필독)</label>
+                <p class="text-xs text-slate-600 mb-3 leading-relaxed">GitHub <strong>files/[학교명]/</strong> 폴더에 4개 PDF를 올립니다. 현지에서 받은 자료를 항목별로 묶어 만든 뒤, 추가 수령 시 <strong>같은 파일명으로 교체</strong>하면 됩니다.</p>
                 <button onclick="simulateUpload()" class="w-full flex items-center justify-center gap-2 bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 text-sm font-bold py-2 rounded-md cursor-pointer transition-colors shadow-sm">
-                    <i class="ph ph-folder-open text-lg text-teal-500"></i> 폴더 구조·업로드 가이드
+                    <i class="ph ph-info text-lg text-teal-500"></i> 업로드 방법 확인하기
                 </button>
             </div>
             <hr class="border-slate-200 mb-6">
@@ -138,7 +123,7 @@
                     <h1 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
                         [<span class="school-name-display text-teal-700">고달초등학교</span>] <span class="program-name-display text-slate-800">국외현장체험학습</span>
                     </h1>
-                    <span id="status-badge" class="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold no-print border border-emerald-200 shadow-sm">서류제출 완료</span>
+                    <span class="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold no-print border border-emerald-200 shadow-sm">서류제출 완료</span>
                 </div>
             </div>
             <div class="flex items-center gap-2 no-print mt-2 sm:mt-0">
@@ -152,24 +137,17 @@
     <main class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-10 no-print">
             <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm flex items-center gap-4">
-                <div class="p-3 bg-indigo-50 text-indigo-600 rounded-lg"><i class="ph ph-folders text-2xl"></i></div>
+                <div class="p-3 bg-indigo-50 text-indigo-600 rounded-lg"><i class="ph ph-file-text text-2xl"></i></div>
                 <div>
                     <p class="text-xs text-slate-500 font-semibold mb-0.5">제출 카테고리</p>
-                    <p class="text-lg font-bold text-slate-800 tracking-tight" id="summary-category-count">4 건</p>
-                </div>
-            </div>
-            <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm flex items-center gap-4">
-                <div class="p-3 bg-violet-50 text-violet-600 rounded-lg"><i class="ph ph-files text-2xl"></i></div>
-                <div>
-                    <p class="text-xs text-slate-500 font-semibold mb-0.5">등록 서류</p>
-                    <p class="text-lg font-bold text-slate-800 tracking-tight" id="summary-file-count">-</p>
+                    <p class="text-lg font-bold text-slate-800 tracking-tight">4 건</p>
                 </div>
             </div>
             <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm flex items-center gap-4">
                 <div class="p-3 bg-teal-50 text-teal-600 rounded-lg"><i class="ph ph-calendar-check text-2xl"></i></div>
                 <div>
                     <p class="text-xs text-slate-500 font-semibold mb-0.5">최종 업데이트</p>
-                    <p class="text-sm font-bold text-slate-800 tracking-tight" id="summary-updated">-</p>
+                    <p class="text-sm font-bold text-slate-800 tracking-tight">사전 서류 등록완료</p>
                 </div>
             </div>
             <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm flex items-center gap-4">
@@ -179,21 +157,99 @@
                     <p class="text-sm font-bold text-slate-800 tracking-tight" id="status-security">위변조 검증 완료</p>
                 </div>
             </div>
-        </div>
-
-        <div class="mb-6 flex flex-col gap-2">
-            <h2 class="text-xl font-bold text-slate-800 border-l-4 border-teal-600 pl-3">출발 전 제출 자료</h2>
-            <p class="text-sm text-slate-500 pl-4 no-print mt-1">국가·현지 상황에 따라 <span class="font-semibold text-slate-700">확보된 자료만</span> 카테고리별로 정리해 제출합니다. PDF·사진 모두 가능합니다.</p>
-            <div id="flex-info-banner" class="hidden no-print ml-4 mt-2 bg-amber-50 border border-amber-200 rounded-lg px-4 py-3 text-xs text-amber-900 leading-relaxed">
-                <i class="ph ph-info text-amber-600 align-middle mr-1"></i>
-                <strong>유연 제출 방식:</strong> 현지에서 제공받은 자료(예약확인서, 호텔·식당 사진, 식당 영업서류 등)만 등록합니다. 국가별로 없는 서류는 빈칸으로 두며, 담당자 메모에 확보 범위를 표기합니다.
+            <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm flex items-center gap-4">
+                <div class="p-3 bg-orange-50 text-orange-600 rounded-lg"><i class="ph ph-headset text-2xl"></i></div>
+                <div>
+                    <p class="text-xs text-slate-500 font-semibold mb-0.5">담당 부서</p>
+                    <p class="text-sm font-bold text-slate-800 tracking-tight">큐비글로벌 행정팀</p>
+                </div>
             </div>
         </div>
 
-        <div id="documents-container" class="space-y-6">
-            <div class="bg-white border border-slate-200 rounded-xl p-8 text-center text-slate-400">
-                <i class="ph ph-spinner animate-spin text-2xl"></i>
-                <p class="mt-2 text-sm">서류 목록 불러오는 중...</p>
+        <div class="mb-6 flex flex-col gap-1">
+            <h2 class="text-xl font-bold text-slate-800 border-l-4 border-teal-600 pl-3">사전 제출 구비서류 목록</h2>
+            <p class="text-sm text-slate-500 pl-4 no-print mt-1">목록에서 <span class="font-semibold text-slate-700">열람/다운로드</span> 버튼을 클릭하여 PDF를 확인하실 수 있습니다.</p>
+        </div>
+
+        <div class="space-y-6">
+            <div class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden break-inside-avoid">
+                <div class="bg-slate-50/80 px-6 py-4 border-b border-slate-200">
+                    <h3 class="font-bold text-teal-800 flex items-center gap-2 text-base"><i class="ph ph-buildings text-indigo-500 text-xl"></i> 01. 숙박(호텔) 관련 서류</h3>
+                </div>
+                <div class="px-6 py-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 table-row-hover transition-colors">
+                    <div class="flex items-start sm:items-center gap-4">
+                        <i class="ph ph-file-pdf text-rose-500 text-3xl"></i>
+                        <div>
+                            <p class="text-base font-bold text-slate-800 mb-1">숙박 관련 제출 자료</p>
+                            <p class="text-sm text-slate-500">예약확인서, 숙소 안내·사진, 현지에서 확보한 숙박 관련 자료 등</p>
+                        </div>
+                    </div>
+                    <div class="shrink-0">
+                        <a href="#" data-file="01_hotel.pdf" target="_blank" class="dynamic-doc-link no-print bg-white border border-slate-300 text-slate-700 hover:bg-teal-50 hover:border-teal-400 px-4 py-2.5 rounded-md text-sm font-semibold transition-all shadow-sm flex items-center gap-2">
+                            <i class="ph ph-eye text-lg text-slate-400"></i> 열람/다운로드
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden break-inside-avoid">
+                <div class="bg-slate-50/80 px-6 py-4 border-b border-slate-200">
+                    <h3 class="font-bold text-teal-800 flex items-center gap-2 text-base"><i class="ph ph-bus text-teal-500 text-xl"></i> 02. 차량 관련 서류</h3>
+                </div>
+                <div class="px-6 py-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 table-row-hover transition-colors">
+                    <div class="flex items-start sm:items-center gap-4">
+                        <i class="ph ph-file-pdf text-rose-500 text-3xl"></i>
+                        <div>
+                            <p class="text-base font-bold text-slate-800 mb-1">차량 관련 제출 자료</p>
+                            <p class="text-sm text-slate-500">운송허가, 차량·보험, 운전자 자격 등 현지에서 확보한 차량 관련 자료</p>
+                        </div>
+                    </div>
+                    <div class="shrink-0">
+                        <a href="#" data-file="02_bus.pdf" target="_blank" class="dynamic-doc-link no-print bg-white border border-slate-300 text-slate-700 hover:bg-teal-50 hover:border-teal-400 px-4 py-2.5 rounded-md text-sm font-semibold transition-all shadow-sm flex items-center gap-2">
+                            <i class="ph ph-eye text-lg text-slate-400"></i> 열람/다운로드
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden break-inside-avoid">
+                <div class="bg-slate-50/80 px-6 py-4 border-b border-slate-200">
+                    <h3 class="font-bold text-orange-800 flex items-center gap-2 text-base"><i class="ph ph-fork-knife text-orange-500 text-xl"></i> 03. 식사(식당) 관련 서류</h3>
+                </div>
+                <div class="px-6 py-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 table-row-hover transition-colors">
+                    <div class="flex items-start sm:items-center gap-4">
+                        <i class="ph ph-file-pdf text-rose-500 text-3xl"></i>
+                        <div>
+                            <p class="text-base font-bold text-slate-800 mb-1">식사·식당 관련 제출 자료</p>
+                            <p class="text-sm text-slate-500">식당별 영업·허가 서류, 식단·메뉴, 식당 사진 등 현지에서 확보한 식사 관련 자료</p>
+                        </div>
+                    </div>
+                    <div class="shrink-0">
+                        <a href="#" data-file="03_meal.pdf" target="_blank" class="dynamic-doc-link no-print bg-white border border-slate-300 text-slate-700 hover:bg-teal-50 hover:border-teal-400 px-4 py-2.5 rounded-md text-sm font-semibold transition-all shadow-sm flex items-center gap-2">
+                            <i class="ph ph-eye text-lg text-slate-400"></i> 열람/다운로드
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden break-inside-avoid">
+                <div class="bg-slate-50/80 px-6 py-4 border-b border-slate-200">
+                    <h3 class="font-bold text-teal-800 flex items-center gap-2 text-base"><i class="ph ph-shield-check text-teal-500 text-xl"></i> 04. 기타(인솔·안전·보험) 관련 서류</h3>
+                </div>
+                <div class="px-6 py-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 table-row-hover transition-colors">
+                    <div class="flex items-start sm:items-center gap-4">
+                        <i class="ph ph-file-pdf text-rose-500 text-3xl"></i>
+                        <div>
+                            <p class="text-base font-bold text-slate-800 mb-1">기타 제출 자료</p>
+                            <p class="text-sm text-slate-500">현지가이드 자격증, 여행자보험, 인솔·안전 관련 등 행사별 해당 자료</p>
+                        </div>
+                    </div>
+                    <div class="shrink-0">
+                        <a href="#" data-file="04_others.pdf" target="_blank" class="dynamic-doc-link no-print bg-white border border-slate-300 text-slate-700 hover:bg-teal-50 hover:border-teal-400 px-4 py-2.5 rounded-md text-sm font-semibold transition-all shadow-sm flex items-center gap-2">
+                            <i class="ph ph-eye text-lg text-slate-400"></i> 열람/다운로드
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
@@ -216,247 +272,9 @@
     </div>
 
     <script>
-        const CATEGORY_META = [
-            {
-                id: '01_hotel',
-                num: '01',
-                icon: 'ph-buildings',
-                iconColor: 'text-indigo-500',
-                titleColor: 'text-teal-800',
-                title: '숙박 관련 제출자료',
-                desc: '예약확인서, 호텔 안내·사진 등 현지에서 확보 가능한 자료 (인허가 미제공 시 메모 표기)',
-                folderHint: '01_hotel/숙소명/',
-                legacyFile: '01_hotel.pdf'
-            },
-            {
-                id: '02_bus',
-                num: '02',
-                icon: 'ph-bus',
-                iconColor: 'text-teal-500',
-                titleColor: 'text-teal-800',
-                title: '차량 관련 제출자료',
-                desc: '차량회사·운전자 관련 자료 중 현지에서 확보된 항목',
-                folderHint: '02_bus/차량회사명/',
-                legacyFile: '02_bus.pdf'
-            },
-            {
-                id: '03_meal',
-                num: '03',
-                icon: 'ph-fork-knife',
-                iconColor: 'text-orange-500',
-                titleColor: 'text-orange-800',
-                title: '식사·식당 관련 제출자료',
-                desc: '일차·식사별 식당 자료, 메뉴·사진·영업서류 등 (식당 수만큼 그룹 추가)',
-                folderHint: '03_meal/1일차_중식_식당명/',
-                legacyFile: '03_meal.pdf'
-            },
-            {
-                id: '04_insurance',
-                num: '04',
-                icon: 'ph-shield-check',
-                iconColor: 'text-teal-500',
-                titleColor: 'text-teal-800',
-                title: '인솔·안전·보험 제출자료',
-                desc: '현지가이드 자격증, 여행자보험 등 행사별 해당 자료',
-                folderHint: '04_insurance/현지가이드/ · 04_insurance/여행자보험/',
-                legacyFile: '04_others.pdf'
-            }
-        ];
-
-        const STATUS_BADGE = {
-            full: { label: '확보 완료', cls: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
-            partial: { label: '일부 확보', cls: 'bg-amber-50 text-amber-800 border-amber-200' },
-            pending: { label: '준비 중', cls: 'bg-slate-100 text-slate-500 border-slate-200' }
-        };
-
         let currentSchool = '고달초등학교';
         let currentProgram = '국외현장체험학습';
         let encodedPassword = null;
-        let schoolInputTimer = null;
-
-        function escHtml(str) {
-            return String(str ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-        }
-
-        function getSchoolName() {
-            return (document.getElementById('admin-school-name').value || currentSchool || '고달초등학교').trim();
-        }
-
-        function fileUrl(school, path) {
-            return `./files/${encodeURIComponent(school).replace(/%2F/g, '/')}/${path.split('/').map(encodeURIComponent).join('/')}`;
-        }
-
-        function countManifestFiles(manifest) {
-            if (!manifest || !manifest.groups) return 0;
-            let n = 0;
-            Object.values(manifest.groups).forEach(groups => {
-                (groups || []).forEach(g => { n += (g.files || []).length; });
-            });
-            return n;
-        }
-
-        function renderLegacyCategory(meta, school) {
-            const href = fileUrl(school, meta.legacyFile);
-            return `
-                <div class="px-6 py-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 table-row-hover transition-colors">
-                    <div class="flex items-start sm:items-center gap-4">
-                        <i class="ph ph-file-pdf text-rose-500 text-3xl"></i>
-                        <div>
-                            <p class="text-base font-bold text-slate-800 mb-1">${escHtml(meta.title)} 일체 (통합 PDF)</p>
-                            <p class="text-sm text-slate-500">${escHtml(meta.desc)}</p>
-                        </div>
-                    </div>
-                    <div class="shrink-0">
-                        <a href="${href}" target="_blank" class="no-print bg-white border border-slate-300 text-slate-700 hover:bg-teal-50 hover:border-teal-400 px-4 py-2.5 rounded-md text-sm font-semibold transition-all shadow-sm flex items-center gap-2">
-                            <i class="ph ph-eye text-lg text-slate-400"></i> 열람/다운로드
-                        </a>
-                    </div>
-                </div>`;
-        }
-
-        function fileIcon(path) {
-            const ext = (path.split('.').pop() || '').toLowerCase();
-            if (['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext)) return { icon: 'ph-image', color: 'text-sky-500' };
-            if (['pdf'].includes(ext)) return { icon: 'ph-file-pdf', color: 'text-rose-500' };
-            return { icon: 'ph-file', color: 'text-slate-400' };
-        }
-
-        function statusBadgeHtml(status) {
-            const s = STATUS_BADGE[status];
-            if (!s) return '';
-            return `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full border ${s.cls}">${s.label}</span>`;
-        }
-
-        function renderGroupBlock(group, school, openByDefault) {
-            const files = group.files || [];
-            const isPending = !files.length;
-
-            if (isPending) {
-                return `
-                <div class="doc-group border-dashed opacity-80">
-                    <div class="px-4 py-3 bg-slate-50 flex items-center justify-between gap-3">
-                        <div class="min-w-0">
-                            <div class="flex flex-wrap items-center gap-2">
-                                <p class="font-bold text-slate-600 text-sm">${escHtml(group.title)}</p>
-                                ${statusBadgeHtml(group.status || 'pending')}
-                            </div>
-                            ${group.note ? `<p class="text-xs text-slate-400 mt-0.5">${escHtml(group.note)}</p>` : ''}
-                        </div>
-                        <span class="text-[11px] text-slate-400 shrink-0">등록 예정</span>
-                    </div>
-                </div>`;
-            }
-
-            const fileRows = files.map(f => {
-                const fi = fileIcon(f.path);
-                return `
-                <div class="doc-file-row">
-                    <div class="flex items-center gap-3 min-w-0">
-                        <i class="ph ${fi.icon} ${fi.color} text-xl shrink-0"></i>
-                        <span class="text-sm font-semibold text-slate-700 truncate">${escHtml(f.label)}</span>
-                    </div>
-                    <a href="${fileUrl(school, f.path)}" target="_blank" class="no-print shrink-0 bg-white border border-slate-300 text-slate-700 hover:bg-teal-50 hover:border-teal-400 px-3 py-2 rounded-md text-xs font-bold transition-all shadow-sm flex items-center gap-1.5">
-                        <i class="ph ph-download-simple text-base text-slate-400"></i> 열람/다운로드
-                    </a>
-                </div>`;
-            }).join('');
-
-            return `
-                <details class="doc-group" ${openByDefault ? 'open' : ''}>
-                    <summary>
-                        <div class="min-w-0 text-left">
-                            <div class="flex flex-wrap items-center gap-2">
-                                <p class="font-bold text-slate-800 text-sm">${escHtml(group.title)}</p>
-                                ${statusBadgeHtml(group.status)}
-                            </div>
-                            ${group.note ? `<p class="text-xs text-slate-500 mt-0.5">${escHtml(group.note)}</p>` : ''}
-                        </div>
-                        <div class="flex items-center gap-2 shrink-0">
-                            <span class="text-[11px] font-bold text-teal-700 bg-teal-50 border border-teal-100 px-2 py-0.5 rounded-full">${files.length}건</span>
-                            <i class="ph ph-caret-down chevron text-lg"></i>
-                        </div>
-                    </summary>
-                    <div class="doc-group-body">${fileRows}</div>
-                </details>`;
-        }
-
-        function renderCategoryCard(meta, groups, school, useLegacy) {
-            let body = '';
-            if (useLegacy || !groups || !groups.length) {
-                body = renderLegacyCategory(meta, school);
-                if (!useLegacy) {
-                    body += `<div class="px-6 pb-5 text-xs text-slate-400 no-print">※ 세부 서류는 <code class="bg-slate-100 px-1 rounded">${escHtml(meta.folderHint)}</code> 폴더에 업로드 후 manifest.json에 등록하세요.</div>`;
-                }
-            } else {
-                const blocks = groups.map((g, i) => renderGroupBlock(g, school, i === 0)).filter(Boolean).join('');
-                body = blocks
-                    ? `<div class="px-4 sm:px-6 py-4">${blocks}</div>`
-                    : `<div class="px-6 py-5 text-sm text-slate-400">등록된 자료가 없습니다. 현지에서 확보되는 대로 추가됩니다.</div>`;
-            }
-
-            return `
-                <div class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden break-inside-avoid">
-                    <div class="bg-slate-50/80 px-6 py-4 border-b border-slate-200">
-                        <h3 class="font-bold ${meta.titleColor} flex items-center gap-2 text-base">
-                            <i class="ph ${meta.icon} ${meta.iconColor} text-xl"></i> ${meta.num}. ${escHtml(meta.title)}
-                        </h3>
-                        <p class="text-xs text-slate-500 mt-1 pl-7">${escHtml(meta.desc)}</p>
-                    </div>
-                    ${body}
-                </div>`;
-        }
-
-        function updateSummary(manifest, useLegacy) {
-            const fileCount = useLegacy ? CATEGORY_META.length : countManifestFiles(manifest);
-            document.getElementById('summary-file-count').innerText = fileCount + ' 건';
-            document.getElementById('summary-category-count').innerText = CATEGORY_META.length + ' 건';
-            document.getElementById('summary-updated').innerText = manifest?.updated || (useLegacy ? '통합 PDF 방식' : '-');
-        }
-
-        async function loadDocuments() {
-            const school = getSchoolName();
-            const container = document.getElementById('documents-container');
-            container.innerHTML = `<div class="bg-white border border-slate-200 rounded-xl p-8 text-center text-slate-400"><i class="ph ph-spinner animate-spin text-2xl"></i><p class="mt-2 text-sm">서류 목록 불러오는 중...</p></div>`;
-
-            let manifest = null;
-            let useLegacy = false;
-
-            try {
-                const res = await fetch(`./files/${encodeURIComponent(school)}/manifest.json?t=${Date.now()}`);
-                if (res.ok) {
-                    manifest = await res.json();
-                    if (manifest.legacy === true) useLegacy = true;
-                } else {
-                    useLegacy = true;
-                }
-            } catch (e) {
-                useLegacy = true;
-            }
-
-            container.innerHTML = CATEGORY_META.map(meta => {
-                const groups = manifest?.groups?.[meta.id] || [];
-                return renderCategoryCard(meta, groups, school, useLegacy);
-            }).join('');
-
-            const banner = document.getElementById('flex-info-banner');
-            if (banner) banner.classList.toggle('hidden', useLegacy);
-
-            updateSummary(manifest, useLegacy);
-        }
-
-        function updatePreviewText() {
-            const inputSchool = getSchoolName();
-            const inputProgram = document.getElementById('admin-program-name').value || currentProgram || '국외현장체험학습';
-            document.title = `출발전 제출서류 [${inputSchool}]`;
-            document.querySelectorAll('.school-name-display').forEach(el => el.innerText = inputSchool);
-            document.querySelectorAll('.program-name-display').forEach(el => el.innerText = inputProgram);
-        }
-
-        function onSchoolInput() {
-            updatePreviewText();
-            clearTimeout(schoolInputTimer);
-            schoolInputTimer = setTimeout(loadDocuments, 400);
-        }
 
         window.onload = function() {
             const urlParams = new URLSearchParams(window.location.search);
@@ -476,7 +294,6 @@
             }
 
             updatePreviewText();
-            loadDocuments();
 
             if (urlParams.has('pwd')) {
                 encodedPassword = urlParams.get('pwd');
@@ -487,6 +304,20 @@
                 document.getElementById('status-security').innerText = '공개 열람 (비밀번호 미설정)';
             }
         };
+
+        function updatePreviewText() {
+            const inputSchool = document.getElementById('admin-school-name').value || '고달초등학교';
+            const inputProgram = document.getElementById('admin-program-name').value || '국외현장체험학습';
+
+            document.title = `출발전 제출서류 [${inputSchool}]`;
+            document.querySelectorAll('.school-name-display').forEach(el => el.innerText = inputSchool);
+            document.querySelectorAll('.program-name-display').forEach(el => el.innerText = inputProgram);
+
+            const safeSchoolName = inputSchool.trim();
+            document.querySelectorAll('.dynamic-doc-link').forEach(link => {
+                link.href = `./files/${safeSchoolName}/${link.getAttribute('data-file')}`;
+            });
+        }
 
         function autoGeneratePassword() {
             const dateVal = document.getElementById('admin-departure-date').value;
@@ -515,26 +346,25 @@
 
         function simulateUpload() {
             alert(
-                "[QB Global · 유연 제출 가이드]\n\n" +
-                "📌 원칙: 현지에서 실제로 받은 자료만 등록합니다.\n" +
-                "   (없는 서류는 억지로 채우지 않음 · note에 사유 메모)\n\n" +
-                "📁 files/[학교명]/ + manifest.json\n\n" +
-                "01_hotel/숙소명/\n" +
-                "  · 예약확인서.pdf (인허가 못 받을 때도 OK)\n" +
-                "  · hotel_exterior.jpg, room.jpg (사진)\n" +
-                "  · note: \"호텔 정책상 예약확인서만 제공\"\n" +
-                "  · status: \"partial\" (일부 확보)\n\n" +
-                "03_meal/1일차_중식_식당명/\n" +
-                "  · 식당 자료가 많으면 식당·일차별로 그룹 추가\n\n" +
-                "04_insurance/현지가이드/\n" +
-                "  · 자격증 등 해당 자료만\n\n" +
-                "status 값: full(확보완료) · partial(일부) · pending(준비중)\n" +
-                "파일 형식: PDF · JPG · PNG 모두 가능"
+                "[QB Global · PDF 업로드 가이드]\n\n" +
+                "📁 GitHub: Departure_Documents_QB/files/[학교명]/\n\n" +
+                "아래 4개 파일명을 그대로 사용하세요:\n" +
+                "  01_hotel.pdf  — 숙박(호텔)\n" +
+                "  02_bus.pdf    — 차량\n" +
+                "  03_meal.pdf   — 식사(식당)\n" +
+                "  04_others.pdf — 기타(가이드·보험 등)\n\n" +
+                "📌 작업 방법\n" +
+                "1. 현지에서 받은 자료를 항목별로 PDF에 묶어 만듭니다.\n" +
+                "   (예: 호텔 예약확인서+사진, 식당 서류 전체)\n" +
+                "2. 해당 파일명으로 [학교명] 폴더에 업로드합니다.\n" +
+                "3. 추가 자료 수령 시 PDF에 합쳐 같은 파일명으로 교체합니다.\n\n" +
+                "※ 국가·지역·학교마다 내용은 달라도 파일명은 동일합니다.\n" +
+                "※ 학교명은 관리자 패널 입력값과 폴더명이 같아야 합니다."
             );
         }
 
         function generateLink() {
-            const school = getSchoolName();
+            const school = document.getElementById('admin-school-name').value || '고달초등학교';
             const program = document.getElementById('admin-program-name').value || '국외현장체험학습';
             const pwd = document.getElementById('admin-password').value;
             const btn = document.getElementById('generateBtn');
@@ -543,7 +373,7 @@
             btn.classList.add('opacity-80', 'cursor-not-allowed');
 
             const url = new URL(window.location.href.split('?')[0]);
-            url.searchParams.set('school', school);
+            url.searchParams.set('school', school.trim());
             url.searchParams.set('program', program.trim());
             if (pwd.trim()) url.searchParams.set('pwd', btoa(pwd.trim()));
 
