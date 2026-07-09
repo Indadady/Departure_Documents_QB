@@ -93,8 +93,8 @@
                 <input type="text" id="admin-password" placeholder="예: 260809" class="w-full px-3 py-2 border border-teal-200 bg-teal-50 rounded-md focus:outline-none focus:border-teal-500 text-sm font-semibold tracking-wider">
             </div>
             <div class="mb-6 bg-teal-50 p-4 rounded-lg border border-teal-200">
-                <label class="block text-sm font-bold text-slate-700 mb-2">5. 서류 업로드 구조 (필독)</label>
-                <p class="text-xs text-slate-600 mb-3 leading-relaxed">카테고리별 <strong>하위 폴더</strong>에 PDF를 넣고, <strong>manifest.json</strong>에 목록을 등록하세요.</p>
+                <label class="block text-sm font-bold text-slate-700 mb-2">5. 제출 자료 업로드 (필독)</label>
+                <p class="text-xs text-slate-600 mb-3 leading-relaxed">현지에서 <strong>실제로 받은 자료만</strong> 카테고리별 폴더에 넣고 manifest.json에 등록하세요. PDF·JPG·PNG 모두 가능합니다.</p>
                 <button onclick="simulateUpload()" class="w-full flex items-center justify-center gap-2 bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 text-sm font-bold py-2 rounded-md cursor-pointer transition-colors shadow-sm">
                     <i class="ph ph-folder-open text-lg text-teal-500"></i> 폴더 구조·업로드 가이드
                 </button>
@@ -181,9 +181,13 @@
             </div>
         </div>
 
-        <div class="mb-6 flex flex-col gap-1">
-            <h2 class="text-xl font-bold text-slate-800 border-l-4 border-teal-600 pl-3">사전 제출 구비서류 목록</h2>
-            <p class="text-sm text-slate-500 pl-4 no-print mt-1">카테고리를 펼치면 <span class="font-semibold text-slate-700">숙소·식당·일차별</span>로 정리된 서류를 개별 열람·다운로드할 수 있습니다.</p>
+        <div class="mb-6 flex flex-col gap-2">
+            <h2 class="text-xl font-bold text-slate-800 border-l-4 border-teal-600 pl-3">출발 전 제출 자료</h2>
+            <p class="text-sm text-slate-500 pl-4 no-print mt-1">국가·현지 상황에 따라 <span class="font-semibold text-slate-700">확보된 자료만</span> 카테고리별로 정리해 제출합니다. PDF·사진 모두 가능합니다.</p>
+            <div id="flex-info-banner" class="hidden no-print ml-4 mt-2 bg-amber-50 border border-amber-200 rounded-lg px-4 py-3 text-xs text-amber-900 leading-relaxed">
+                <i class="ph ph-info text-amber-600 align-middle mr-1"></i>
+                <strong>유연 제출 방식:</strong> 현지에서 제공받은 자료(예약확인서, 호텔·식당 사진, 식당 영업서류 등)만 등록합니다. 국가별로 없는 서류는 빈칸으로 두며, 담당자 메모에 확보 범위를 표기합니다.
+            </div>
         </div>
 
         <div id="documents-container" class="space-y-6">
@@ -219,8 +223,8 @@
                 icon: 'ph-buildings',
                 iconColor: 'text-indigo-500',
                 titleColor: 'text-teal-800',
-                title: '숙박 관련 서류',
-                desc: '예약확인서, 사업자/영업신고증, 소방/위생점검 및 영업배상책임보험 등',
+                title: '숙박 관련 제출자료',
+                desc: '예약확인서, 호텔 안내·사진 등 현지에서 확보 가능한 자료 (인허가 미제공 시 메모 표기)',
                 folderHint: '01_hotel/숙소명/',
                 legacyFile: '01_hotel.pdf'
             },
@@ -230,8 +234,8 @@
                 icon: 'ph-bus',
                 iconColor: 'text-teal-500',
                 titleColor: 'text-teal-800',
-                title: '차량 관련 서류',
-                desc: '운송사업허가증, 차량등록증, 종합보험증권, 운전자 적성정밀검사 결과 등',
+                title: '차량 관련 제출자료',
+                desc: '차량회사·운전자 관련 자료 중 현지에서 확보된 항목',
                 folderHint: '02_bus/차량회사명/',
                 legacyFile: '02_bus.pdf'
             },
@@ -241,8 +245,8 @@
                 icon: 'ph-fork-knife',
                 iconColor: 'text-orange-500',
                 titleColor: 'text-orange-800',
-                title: '식사 관련 서류',
-                desc: '전 일정 식단 정보, 식당별 영업/집단급식소 설치신고증, 배상책임보험 등',
+                title: '식사·식당 관련 제출자료',
+                desc: '일차·식사별 식당 자료, 메뉴·사진·영업서류 등 (식당 수만큼 그룹 추가)',
                 folderHint: '03_meal/1일차_중식_식당명/',
                 legacyFile: '03_meal.pdf'
             },
@@ -252,12 +256,18 @@
                 icon: 'ph-shield-check',
                 iconColor: 'text-teal-500',
                 titleColor: 'text-teal-800',
-                title: '인솔·안전 및 보험 관련 서류',
-                desc: '인솔자·현지가이드 등 동행 인력의 자격·신원확인 서류와 단체 여행자보험 가입증명원 ※ 행사별 해당 서류에 한함',
+                title: '인솔·안전·보험 제출자료',
+                desc: '현지가이드 자격증, 여행자보험 등 행사별 해당 자료',
                 folderHint: '04_insurance/현지가이드/ · 04_insurance/여행자보험/',
                 legacyFile: '04_others.pdf'
             }
         ];
+
+        const STATUS_BADGE = {
+            full: { label: '확보 완료', cls: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
+            partial: { label: '일부 확보', cls: 'bg-amber-50 text-amber-800 border-amber-200' },
+            pending: { label: '준비 중', cls: 'bg-slate-100 text-slate-500 border-slate-200' }
+        };
 
         let currentSchool = '고달초등학교';
         let currentProgram = '국외현장체험학습';
@@ -304,26 +314,62 @@
                 </div>`;
         }
 
+        function fileIcon(path) {
+            const ext = (path.split('.').pop() || '').toLowerCase();
+            if (['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(ext)) return { icon: 'ph-image', color: 'text-sky-500' };
+            if (['pdf'].includes(ext)) return { icon: 'ph-file-pdf', color: 'text-rose-500' };
+            return { icon: 'ph-file', color: 'text-slate-400' };
+        }
+
+        function statusBadgeHtml(status) {
+            const s = STATUS_BADGE[status];
+            if (!s) return '';
+            return `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full border ${s.cls}">${s.label}</span>`;
+        }
+
         function renderGroupBlock(group, school, openByDefault) {
             const files = group.files || [];
-            if (!files.length) return '';
-            const fileRows = files.map(f => `
+            const isPending = !files.length;
+
+            if (isPending) {
+                return `
+                <div class="doc-group border-dashed opacity-80">
+                    <div class="px-4 py-3 bg-slate-50 flex items-center justify-between gap-3">
+                        <div class="min-w-0">
+                            <div class="flex flex-wrap items-center gap-2">
+                                <p class="font-bold text-slate-600 text-sm">${escHtml(group.title)}</p>
+                                ${statusBadgeHtml(group.status || 'pending')}
+                            </div>
+                            ${group.note ? `<p class="text-xs text-slate-400 mt-0.5">${escHtml(group.note)}</p>` : ''}
+                        </div>
+                        <span class="text-[11px] text-slate-400 shrink-0">등록 예정</span>
+                    </div>
+                </div>`;
+            }
+
+            const fileRows = files.map(f => {
+                const fi = fileIcon(f.path);
+                return `
                 <div class="doc-file-row">
                     <div class="flex items-center gap-3 min-w-0">
-                        <i class="ph ph-file-pdf text-rose-500 text-xl shrink-0"></i>
+                        <i class="ph ${fi.icon} ${fi.color} text-xl shrink-0"></i>
                         <span class="text-sm font-semibold text-slate-700 truncate">${escHtml(f.label)}</span>
                     </div>
                     <a href="${fileUrl(school, f.path)}" target="_blank" class="no-print shrink-0 bg-white border border-slate-300 text-slate-700 hover:bg-teal-50 hover:border-teal-400 px-3 py-2 rounded-md text-xs font-bold transition-all shadow-sm flex items-center gap-1.5">
-                        <i class="ph ph-download-simple text-base text-slate-400"></i> 다운로드
+                        <i class="ph ph-download-simple text-base text-slate-400"></i> 열람/다운로드
                     </a>
-                </div>`).join('');
+                </div>`;
+            }).join('');
 
             return `
                 <details class="doc-group" ${openByDefault ? 'open' : ''}>
                     <summary>
                         <div class="min-w-0 text-left">
-                            <p class="font-bold text-slate-800 text-sm">${escHtml(group.title)}</p>
-                            ${group.note ? `<p class="text-xs text-slate-500 mt-0.5 truncate">${escHtml(group.note)}</p>` : ''}
+                            <div class="flex flex-wrap items-center gap-2">
+                                <p class="font-bold text-slate-800 text-sm">${escHtml(group.title)}</p>
+                                ${statusBadgeHtml(group.status)}
+                            </div>
+                            ${group.note ? `<p class="text-xs text-slate-500 mt-0.5">${escHtml(group.note)}</p>` : ''}
                         </div>
                         <div class="flex items-center gap-2 shrink-0">
                             <span class="text-[11px] font-bold text-teal-700 bg-teal-50 border border-teal-100 px-2 py-0.5 rounded-full">${files.length}건</span>
@@ -342,14 +388,17 @@
                     body += `<div class="px-6 pb-5 text-xs text-slate-400 no-print">※ 세부 서류는 <code class="bg-slate-100 px-1 rounded">${escHtml(meta.folderHint)}</code> 폴더에 업로드 후 manifest.json에 등록하세요.</div>`;
                 }
             } else {
-                body = `<div class="px-4 sm:px-6 py-4">${groups.map((g, i) => renderGroupBlock(g, school, i === 0)).join('')}</div>`;
+                const blocks = groups.map((g, i) => renderGroupBlock(g, school, i === 0)).filter(Boolean).join('');
+                body = blocks
+                    ? `<div class="px-4 sm:px-6 py-4">${blocks}</div>`
+                    : `<div class="px-6 py-5 text-sm text-slate-400">등록된 자료가 없습니다. 현지에서 확보되는 대로 추가됩니다.</div>`;
             }
 
             return `
                 <div class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden break-inside-avoid">
                     <div class="bg-slate-50/80 px-6 py-4 border-b border-slate-200">
                         <h3 class="font-bold ${meta.titleColor} flex items-center gap-2 text-base">
-                            <i class="ph ${meta.icon} ${meta.iconColor} text-xl"></i> ${meta.num}. ${escHtml(meta.title)} 일체
+                            <i class="ph ${meta.icon} ${meta.iconColor} text-xl"></i> ${meta.num}. ${escHtml(meta.title)}
                         </h3>
                         <p class="text-xs text-slate-500 mt-1 pl-7">${escHtml(meta.desc)}</p>
                     </div>
@@ -388,6 +437,9 @@
                 const groups = manifest?.groups?.[meta.id] || [];
                 return renderCategoryCard(meta, groups, school, useLegacy);
             }).join('');
+
+            const banner = document.getElementById('flex-info-banner');
+            if (banner) banner.classList.toggle('hidden', useLegacy);
 
             updateSummary(manifest, useLegacy);
         }
@@ -463,20 +515,21 @@
 
         function simulateUpload() {
             alert(
-                "[QB Global · 서류 업로드 가이드]\n\n" +
-                "📁 GitHub 저장소: Departure_Documents_QB/files/[학교명]/\n\n" +
-                "1️⃣ manifest.json — 서류 목록 정의 (files/manifest.template.json 복사)\n\n" +
-                "2️⃣ 카테고리별 하위 폴더에 PDF 업로드\n" +
-                "  · 01_hotel/숙소명/ — 예약확인서, 영업허가 등\n" +
-                "  · 02_bus/차량회사명/ — 운송허가, 보험 등\n" +
-                "  · 03_meal/1일차_중식_식당명/ — 영업신고, 보험, 메뉴\n" +
-                "  · 03_meal/1일차_석식_식당명/\n" +
-                "  · 04_insurance/현지가이드/ — 자격증, 신원확인\n" +
-                "  · 04_insurance/여행자보험/ — 가입증명\n\n" +
-                "3️⃣ manifest.json에 각 파일 경로·표시명 등록\n\n" +
-                "💡 식사는 '일차_중식_식당명' 또는 '식당명' 폴더로 구분하면\n" +
-                "   담당자·학교 모두 찾기 쉽습니다.\n\n" +
-                "※ 학교명·폴더명·manifest 경로가 동일해야 합니다."
+                "[QB Global · 유연 제출 가이드]\n\n" +
+                "📌 원칙: 현지에서 실제로 받은 자료만 등록합니다.\n" +
+                "   (없는 서류는 억지로 채우지 않음 · note에 사유 메모)\n\n" +
+                "📁 files/[학교명]/ + manifest.json\n\n" +
+                "01_hotel/숙소명/\n" +
+                "  · 예약확인서.pdf (인허가 못 받을 때도 OK)\n" +
+                "  · hotel_exterior.jpg, room.jpg (사진)\n" +
+                "  · note: \"호텔 정책상 예약확인서만 제공\"\n" +
+                "  · status: \"partial\" (일부 확보)\n\n" +
+                "03_meal/1일차_중식_식당명/\n" +
+                "  · 식당 자료가 많으면 식당·일차별로 그룹 추가\n\n" +
+                "04_insurance/현지가이드/\n" +
+                "  · 자격증 등 해당 자료만\n\n" +
+                "status 값: full(확보완료) · partial(일부) · pending(준비중)\n" +
+                "파일 형식: PDF · JPG · PNG 모두 가능"
             );
         }
 

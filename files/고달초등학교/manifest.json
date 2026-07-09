@@ -3,62 +3,63 @@
   "groups": {
     "01_hotel": [
       {
-        "title": "Jakarta Grand Hotel (예시)",
-        "note": "3박 예약 · 조식 포함 — 실제 숙소명으로 폴더명 변경 후 PDF 업로드",
+        "title": "Jakarta ○○ Hotel",
+        "status": "partial",
+        "note": "현지 호텔 정책상 예약확인서만 제공 (인허가·내부서류는 제3국 학교 요청에 미제공)",
         "files": [
-          { "label": "예약확인서", "path": "01_hotel/Jakarta Grand Hotel/reservation.pdf" },
-          { "label": "영업허가·소방·위생점검", "path": "01_hotel/Jakarta Grand Hotel/license_safety.pdf" },
-          { "label": "영업배상책임보험", "path": "01_hotel/Jakarta Grand Hotel/insurance.pdf" }
+          { "label": "예약확인서 (Booking Confirmation)", "path": "01_hotel/Jakarta Hotel/reservation.pdf" },
+          { "label": "호텔 외관·로비 사진", "path": "01_hotel/Jakarta Hotel/hotel_exterior.jpg" },
+          { "label": "객실·조식 공간 사진", "path": "01_hotel/Jakarta Hotel/hotel_room.jpg" }
         ]
       }
     ],
     "02_bus": [
       {
-        "title": "현지 차량회사 (예시)",
-        "note": "전용 버스 1대 — 차량회사명으로 폴더 생성",
-        "files": [
-          { "label": "운송사업허가증", "path": "02_bus/현지차량회사/transport_license.pdf" },
-          { "label": "차량등록증·종합보험", "path": "02_bus/현지차량회사/vehicle_insurance.pdf" },
-          { "label": "운전자 적성검사", "path": "02_bus/현지차량회사/driver_check.pdf" }
-        ]
+        "title": "현지 차량회사",
+        "status": "pending",
+        "note": "현지 수급 후 등록 예정",
+        "files": []
       }
     ],
     "03_meal": [
       {
         "title": "1일차 · 중식",
-        "note": "Warung Makan Sederhana (예시 식당명)",
+        "status": "full",
+        "note": "Warung Makan Sederhana",
         "files": [
-          { "label": "영업·집단급식 신고증", "path": "03_meal/1일차_중식_Warung Makan Sederhana/license.pdf" },
-          { "label": "배상책임보험", "path": "03_meal/1일차_중식_Warung Makan Sederhana/insurance.pdf" }
+          { "label": "식당 영업·허가 서류", "path": "03_meal/1일차_중식_Warung Makan Sederhana/license.pdf" },
+          { "label": "식당 외관·내부 사진", "path": "03_meal/1일차_중식_Warung Makan Sederhana/restaurant_photo.jpg" },
+          { "label": "메뉴·식단 정보", "path": "03_meal/1일차_중식_Warung Makan Sederhana/menu.pdf" }
         ]
       },
       {
         "title": "1일차 · 석식",
-        "note": "Resto Padang Minang (예시 식당명)",
+        "status": "full",
+        "note": "Resto Padang Minang",
         "files": [
-          { "label": "영업·집단급식 신고증", "path": "03_meal/1일차_석식_Resto Padang Minang/license.pdf" },
-          { "label": "식단·메뉴 정보", "path": "03_meal/1일차_석식_Resto Padang Minang/menu.pdf" }
+          { "label": "식당 영업·허가 서류", "path": "03_meal/1일차_석식_Resto Padang Minang/license.pdf" },
+          { "label": "식당 사진", "path": "03_meal/1일차_석식_Resto Padang Minang/restaurant_photo.jpg" }
         ]
       },
       {
         "title": "2일차 · 중식",
-        "note": "폴더명 예: 2일차_중식_식당명",
-        "files": [
-          { "label": "영업·집단급식 신고증", "path": "03_meal/2일차_중식_식당명/license.pdf" }
-        ]
+        "status": "pending",
+        "note": "현지 식당 확정 후 등록",
+        "files": []
       }
     ],
     "04_insurance": [
       {
         "title": "현지가이드",
-        "note": "인도네시아 현지 가이드 자격·신원확인",
+        "status": "full",
+        "note": "인도네시아 현지 가이드",
         "files": [
-          { "label": "가이드 자격증", "path": "04_insurance/현지가이드/guide_license.pdf" },
-          { "label": "신원·전력 조회 동의", "path": "04_insurance/현지가이드/background_check.pdf" }
+          { "label": "가이드 자격증", "path": "04_insurance/현지가이드/guide_license.pdf" }
         ]
       },
       {
         "title": "단체 여행자보험",
+        "status": "full",
         "note": "국내 가입 증명",
         "files": [
           { "label": "여행자보험 가입증명원", "path": "04_insurance/여행자보험/travel_insurance.pdf" }

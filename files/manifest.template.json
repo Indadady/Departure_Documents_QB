@@ -3,49 +3,45 @@
   "groups": {
     "01_hotel": [
       {
-        "title": "숙소명 (예: Grand Hyatt Jakarta)",
-        "note": "예약 기간·조식 여부 등 메모 (선택)",
+        "title": "숙소명",
+        "status": "partial",
+        "note": "현지에서 확보된 범위 메모 (예: 예약확인서만 제공)",
         "files": [
           { "label": "예약확인서", "path": "01_hotel/숙소명/reservation.pdf" },
-          { "label": "영업허가·소방·위생점검", "path": "01_hotel/숙소명/license_safety.pdf" }
+          { "label": "호텔 사진", "path": "01_hotel/숙소명/hotel_photo.jpg" }
         ]
       }
     ],
     "02_bus": [
       {
         "title": "차량회사명",
-        "note": "전용 차량 대수 등",
-        "files": [
-          { "label": "운송사업허가증", "path": "02_bus/차량회사명/transport_license.pdf" }
-        ]
+        "status": "pending",
+        "note": "현지 수급 후 등록",
+        "files": []
       }
     ],
     "03_meal": [
       {
         "title": "1일차 · 중식",
+        "status": "full",
         "note": "식당명",
         "files": [
-          { "label": "영업·집단급식 신고증", "path": "03_meal/1일차_중식_식당명/license.pdf" }
-        ]
-      },
-      {
-        "title": "1일차 · 석식",
-        "note": "식당명",
-        "files": [
-          { "label": "영업·집단급식 신고증", "path": "03_meal/1일차_석식_식당명/license.pdf" }
+          { "label": "식당 서류·사진", "path": "03_meal/1일차_중식_식당명/docs.pdf" }
         ]
       }
     ],
     "04_insurance": [
       {
         "title": "현지가이드 (해당 시)",
-        "note": "자격증·신원확인",
+        "status": "full",
+        "note": "",
         "files": [
           { "label": "가이드 자격증", "path": "04_insurance/현지가이드/guide_license.pdf" }
         ]
       },
       {
         "title": "단체 여행자보험",
+        "status": "full",
         "note": "",
         "files": [
           { "label": "여행자보험 가입증명원", "path": "04_insurance/여행자보험/travel_insurance.pdf" }
