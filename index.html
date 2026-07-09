@@ -86,7 +86,7 @@
             </div>
             <hr class="border-slate-200 mb-6">
             <button id="generateBtn" onclick="generateLink()" class="w-full bg-[#0b1324] hover:bg-[#1e293b] text-white font-bold py-3.5 rounded-lg transition-colors flex items-center justify-center gap-2 shadow-md">
-                <i class="ph ph-link text-lg"></i> 단축 보안링크 생성 및 복사
+                <i class="ph ph-link text-lg"></i> 보안 링크 복사
             </button>
         </div>
         <div class="p-4 bg-slate-100 text-xs text-slate-500 text-center border-t border-slate-200 font-semibold">QB Global Document Portal</div>
@@ -363,14 +363,14 @@
             );
         }
 
+        const SCHOOL_SHORT_PATHS = {
+            '고달초등학교': 'godal/'
+        };
+
         function generateLink() {
             const school = document.getElementById('admin-school-name').value || '고달초등학교';
             const program = document.getElementById('admin-program-name').value || '국외현장체험학습';
             const pwd = document.getElementById('admin-password').value;
-            const btn = document.getElementById('generateBtn');
-
-            btn.innerHTML = '<i class="ph ph-spinner animate-spin text-lg"></i> 단축 링크 생성 중...';
-            btn.classList.add('opacity-80', 'cursor-not-allowed');
 
             const url = new URL(window.location.href.split('?')[0]);
             url.searchParams.set('school', school.trim());
@@ -378,25 +378,12 @@
             if (pwd.trim()) url.searchParams.set('pwd', btoa(pwd.trim()));
 
             const longUrl = url.toString();
-            const script = document.createElement('script');
-            const callbackName = 'jsonp_callback_' + Math.round(100000 * Math.random());
-            const fallbackTimer = setTimeout(() => { finishCopy(longUrl, school, false); cleanup(); }, 3500);
+            const shortPath = SCHOOL_SHORT_PATHS[school.trim()];
+            const shortUrl = shortPath
+                ? new URL(shortPath, window.location.href.split('?')[0]).toString()
+                : null;
 
-            window[callbackName] = function(data) {
-                clearTimeout(fallbackTimer);
-                finishCopy(data?.shorturl || longUrl, school, !!data?.shorturl);
-                cleanup();
-            };
-
-            function cleanup() {
-                delete window[callbackName];
-                if (script.parentNode) document.body.removeChild(script);
-                btn.innerHTML = '<i class="ph ph-link text-lg"></i> 단축 보안링크 생성 및 복사';
-                btn.classList.remove('opacity-80', 'cursor-not-allowed');
-            }
-
-            script.src = `https://is.gd/create.php?format=json&url=${encodeURIComponent(longUrl)}&callback=${callbackName}`;
-            document.body.appendChild(script);
+            finishCopy(shortUrl || longUrl, school, !!shortUrl);
         }
 
         function finishCopy(text, school, isShort) {
@@ -406,7 +393,8 @@
             dummy.select();
             document.execCommand('copy');
             document.body.removeChild(dummy);
-            showToast(`[${school}] ${isShort ? '단축 보안 링크가 복사되었습니다!' : '보안 링크가 복사되었습니다!'}`);
+            const msg = isShort ? '광고 없는 단축 링크가 복사되었습니다!' : '보안 링크가 복사되었습니다!';
+            showToast(`[${school}] ${msg}`);
             setTimeout(() => toggleSidebar(), 1200);
         }
 
