@@ -133,7 +133,7 @@
                     <h1 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
                         [<span class="school-name-display text-teal-700">고달초등학교</span>] <span class="program-name-display text-slate-800">국외현장체험학습</span>
                     </h1>
-                    <span class="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold no-print border border-emerald-200 shadow-sm">서류제출 완료</span>
+                    <span id="status-badge" class="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold no-print border border-emerald-200 shadow-sm">서류제출 완료</span>
                 </div>
             </div>
             <div class="flex items-center gap-2 no-print mt-2 sm:mt-0">
@@ -157,7 +157,7 @@
                 <div class="p-3 bg-teal-50 text-teal-600 rounded-lg"><i class="ph ph-calendar-check text-2xl"></i></div>
                 <div>
                     <p class="text-xs text-slate-500 font-semibold mb-0.5">최종 업데이트</p>
-                    <p class="text-sm font-bold text-slate-800 tracking-tight">사전 서류 등록완료</p>
+                    <p class="text-sm font-bold text-slate-800 tracking-tight" id="status-update">사전 서류 등록완료</p>
                 </div>
             </div>
             <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm flex items-center gap-4">
@@ -298,6 +298,13 @@
             if (urlParams.has('school')) {
                 currentSchool = urlParams.get('school');
                 document.getElementById('admin-school-name').value = currentSchool;
+                const badge = document.getElementById('status-badge');
+                if (badge && currentSchool.indexOf('청명') !== -1) {
+                    badge.textContent = '현지 서류 수령 중';
+                    badge.className = 'px-2.5 py-1 rounded-full bg-amber-50 text-amber-800 text-xs font-bold no-print border border-amber-200 shadow-sm';
+                    const upd = document.getElementById('status-update');
+                    if (upd) upd.textContent = '현지 수령 후 카테고리별 업데이트';
+                }
             }
             if (urlParams.has('program')) {
                 currentProgram = urlParams.get('program');
@@ -375,7 +382,8 @@
         }
 
         const SCHOOL_SHORT_PATHS = {
-            '고달초등학교': 'godal/'
+            '고달초등학교': 'godal/',
+            '청명고등학교': 'cheongmyeong/'
         };
         const LINK_HISTORY_KEY = 'qb_departure_link_history';
         let seededSchools = [];
