@@ -300,10 +300,10 @@
                 document.getElementById('admin-school-name').value = currentSchool;
                 const badge = document.getElementById('status-badge');
                 if (badge && currentSchool.indexOf('청명') !== -1) {
-                    badge.textContent = '현지 서류 수령 중';
-                    badge.className = 'px-2.5 py-1 rounded-full bg-amber-50 text-amber-800 text-xs font-bold no-print border border-amber-200 shadow-sm';
+                    badge.textContent = '서류제출 완료';
+                    badge.className = 'px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold no-print border border-emerald-200 shadow-sm';
                     const upd = document.getElementById('status-update');
-                    if (upd) upd.textContent = '현지 수령 후 카테고리별 업데이트';
+                    if (upd) upd.textContent = '2026.09.18 호텔·식사·보험 등록';
                 }
             }
             if (urlParams.has('program')) {
